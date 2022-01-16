@@ -19,7 +19,7 @@ export default function CFPanel() {
       return {
         provider: provider,
         serviceName: serviceName,
-        price: parseFloat(servicePrice.toFixed(2)),
+        price: servicePrice.toFixed(2),
       };
     });
     setResults(addRatings("cloud-functions", newResults));

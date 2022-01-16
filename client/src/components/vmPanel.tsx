@@ -52,20 +52,20 @@ export default function VMPanel() {
       const entry: ResultType = {
         serviceName: data["service-name"],
         provider: data["provider"],
-        price: 0,
+        price: "0.00",
       };
 
       if (currentConfigName === "Low Budget") {
-        entry["price"] = parseFloat((730 * data["sm" + spotAppend]).toFixed(2));
+        entry["price"] = (730 * data["sm" + spotAppend]).toFixed(2);
         entry["configName"] = data["sm-config-name"];
       } else if (currentConfigName === "Medium Budget") {
-        entry["price"] = parseFloat((730 * data["md" + spotAppend]).toFixed(2));
+        entry["price"] = (730 * data["md" + spotAppend]).toFixed(2);
         entry["configName"] = data["md-config-name"];
       } else if (currentConfigName === "Large Budget") {
-        entry["price"] = parseFloat((730 * data["lg" + spotAppend]).toFixed(2));
+        entry["price"] = (730 * data["lg" + spotAppend]).toFixed(2);
         entry["configName"] = data["lg-config-name"];
       } else if (currentConfigName === "Mega Budget") {
-        entry["price"] = parseFloat((730 * data["xl" + spotAppend]).toFixed(2));
+        entry["price"] = (730 * data["xl" + spotAppend]).toFixed(2);
         entry["configName"] = data["xl-config-name"];
       }
       newResults.push(entry);

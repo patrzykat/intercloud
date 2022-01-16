@@ -4,7 +4,7 @@ import vmRating from "./vmRating";
 import { ResultType } from "../interfaces";
 
 export default function addRatings(collection: string, results: ResultType[]) {
-  const extractedPrices = results.map((res: ResultType) => res.price);
+  const extractedPrices = results.map((res: ResultType) => parseFloat(res.price));
   const cheapestPrice = Math.min(...extractedPrices);
   const ratingFunction =
     collection === "storage"

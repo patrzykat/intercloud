@@ -28,7 +28,7 @@ export default function StoragePanel() {
       return {
         provider: provider,
         serviceName: serviceName,
-        price: parseFloat((cost + readCost * reads + writeCost * writes).toFixed(2)),
+        price: (cost + readCost * reads + writeCost * writes).toFixed(2),
       };
     });
     setResults(addRatings("storage", newResults));
