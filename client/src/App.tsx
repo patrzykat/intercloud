@@ -3,12 +3,16 @@ import VMPanel from "./components/vmPanel";
 import CFPanel from "./components/cfPanel";
 import StoragePanel from "./components/storagePanel";
 import MakeTab from "./components/tab";
+import logo from "./img/logo.png";
 import "./App.css";
 
 function App() {
   return (
     <div className="App min-w-full min-h-screen bg-unsplash-cloud bg-cover">
-      <div className="w-full max-w-4xl px-2 py-16 sm:px-0 mx-auto">
+      <div className="w-full flex justify-center h-36 pt-4">
+        <img src={logo} className="object-scale-down" alt="Intercloud logo" />
+      </div>
+      <div className="w-full max-w-4xl px-2 pb-16 sm:px-0 mx-auto">
         <Tab.Group>
           <Tab.List className="flex p-1 my-5 space-x-1 bg-blue-900 rounded-xl">
             <MakeTab nm="Virtual Machine" />

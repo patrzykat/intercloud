@@ -1,4 +1,4 @@
-import { Tab } from "@headlessui/react";
+import { Tab, Switch } from "@headlessui/react";
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import VMResultsTable from "./vmResultsTable";
@@ -74,7 +74,7 @@ export default function VMPanel() {
   }
 
   return (
-    <Tab.Panel className="bg-white rounded-xl p-3 focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+    <Tab.Panel className="bg-slate-50 rounded-xl p-3 focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
       <div className="w-full px-4 pt-12">
         <div className="w-full max-w-md mx-auto">
           <RadioGroup value={selected} onChange={setSelected}>
@@ -87,9 +87,30 @@ export default function VMPanel() {
           </RadioGroup>
         </div>
       </div>
+      <div className="flex justify-center mt-5">
+        <span>
+          <text className="mr-4 text-blue-900 font-semibold cursor-default">
+            Allow Spot Pricing
+          </text>
+          <Switch
+            checked={spotOn}
+            onChange={setSpotOn}
+            className={`${
+              spotOn ? "bg-blue-900" : "bg-gray-300"
+            } relative inline-flex items-center h-6 rounded-full w-11`}
+          >
+            <span className="sr-only">Enable notifications</span>
+            <span
+              className={`${
+                spotOn ? "translate-x-6" : "translate-x-1"
+              } inline-block w-4 h-4 transform bg-white rounded-full`}
+            />
+          </Switch>
+        </span>
+      </div>
       <button
         onClick={() => computeResults()}
-        className="bg-blue-900 text-sm leading-5 mt-8 font-medium text-white p-2 m-2 mb-5 rounded-lg block mx-auto"
+        className="bg-blue-900 text-sm leading-5 mt-6 font-medium text-white p-2 m-2 mb-5 rounded-lg block mx-auto"
         type="button"
       >
         Calculate Prices

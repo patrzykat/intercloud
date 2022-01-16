@@ -26,7 +26,7 @@ export default function CFPanel() {
   };
 
   return (
-    <Tab.Panel className="bg-white rounded-xl p-3 focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
+    <Tab.Panel className="bg-slate-50 rounded-xl p-3 focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
       <input
         placeholder="Invocations (in millions)"
         onChange={(e) => setInvos(parseFloat(e.target.value))}

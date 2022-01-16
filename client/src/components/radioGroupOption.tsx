@@ -11,7 +11,7 @@ export default function RadioGroupOption({ plan }: any) {
             ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
             : ""
         }
-        ${checked ? "bg-sky-900 bg-opacity-75 text-white" : "bg-white"}
+        ${checked ? "bg-blue-900 bg-opacity-75 text-white" : "bg-white"}
           relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
       }
     >
@@ -54,7 +54,7 @@ export default function RadioGroupOption({ plan }: any) {
   );
 }
 
-function CheckIcon(props: {className: string}) {
+function CheckIcon(props: { className: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
