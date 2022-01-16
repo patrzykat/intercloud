@@ -54,7 +54,7 @@ export default function RadioGroupOption({ plan }: any) {
   );
 }
 
-function CheckIcon(props: any) {
+function CheckIcon(props: {className: string}) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />

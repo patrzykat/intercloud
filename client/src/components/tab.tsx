@@ -5,7 +5,7 @@ function classNames(class1: string, class2: string, class3: string) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function MakeTab({ nm }: any) {
+export default function MakeTab({ nm }: { nm: string }) {
   return (
     <Tab
       className={({ selected }) =>

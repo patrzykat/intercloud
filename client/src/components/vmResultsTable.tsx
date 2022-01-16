@@ -1,6 +1,12 @@
-export default function VMResultsTable({ results }: any) {
-  function compareFunction(a: any, b: any) {
-    if (parseFloat(a.rating) >= parseFloat(b.rating)) {
+import { CompleteResultType } from "../interfaces";
+
+export default function VMResultsTable({
+  results,
+}: {
+  results: CompleteResultType[];
+}) {
+  function compareFunction(a: CompleteResultType, b: CompleteResultType) {
+    if (a.rating >= b.rating) {
       return -1;
     } else {
       return 1;

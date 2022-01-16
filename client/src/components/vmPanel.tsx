@@ -3,12 +3,10 @@ import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import VMResultsTable from "./vmResultsTable";
 import RadioGroupOption from "./radioGroupOption";
-import vmRating from "../ratings/vmRating";
-
-function classNames(classes1: string, classes2: string) {
-  const classes = [classes1, classes2];
-  return classes.filter(Boolean).join(" ");
-}
+import addRatings from "../helpers/addRatings";
+import { ResultType, CompleteResultType } from "../interfaces";
+import { db } from "../firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
 const plans = [
   {
@@ -37,41 +35,46 @@ const plans = [
   },
 ];
 
-const placeholderResults = [
-  {
-    provider: "AWS",
-    serviceName: "AWS EC2",
-    configName: "VM config for AWS",
-    price: "10.25",
-    rating: vmRating(),
-  },
-  {
-    provider: "GCP",
-    serviceName: "Google Compute Engine",
-    configName: "VM config for GCP",
-    price: "10.26",
-    rating: vmRating(),
-  },
-  {
-    provider: "Azure",
-    serviceName: "Azure B1",
-    configName: "VM config for Azure",
-    price: "10.27",
-    rating: vmRating(),
-  },
-];
-
 export default function VMPanel() {
-  const [showResults, setShowResults] = useState<boolean>(false);
+  const [results, setResults] = useState<false | CompleteResultType[]>(false);
   const [selected, setSelected] = useState(plans[0]);
+  const [spotOn, setSpotOn] = useState(false);
+
+  async function computeResults() {
+    const currentConfigName = selected.name;
+    const data = await getDocs(collection(db, "virtual-machines"));
+    const newResults: ResultType[] = [];
+
+    data.docs.forEach((doc) => {
+      const data = doc.data();
+      const spotAppend = spotOn === true ? "-spot" : "";
+
+      const entry: ResultType = {
+        serviceName: data["service-name"],
+        provider: data["provider"],
+        price: 0,
+      };
+
+      if (currentConfigName === "Low Budget") {
+        entry["price"] = parseFloat((730 * data["sm" + spotAppend]).toFixed(2));
+        entry["configName"] = data["sm-config-name"];
+      } else if (currentConfigName === "Medium Budget") {
+        entry["price"] = parseFloat((730 * data["md" + spotAppend]).toFixed(2));
+        entry["configName"] = data["md-config-name"];
+      } else if (currentConfigName === "Large Budget") {
+        entry["price"] = parseFloat((730 * data["lg" + spotAppend]).toFixed(2));
+        entry["configName"] = data["lg-config-name"];
+      } else if (currentConfigName === "Mega Budget") {
+        entry["price"] = parseFloat((730 * data["xl" + spotAppend]).toFixed(2));
+        entry["configName"] = data["xl-config-name"];
+      }
+      newResults.push(entry);
+    });
+    setResults(addRatings("virtual-machines", newResults));
+  }
 
   return (
-    <Tab.Panel
-      className={classNames(
-        "bg-white rounded-xl p-3",
-        "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60"
-      )}
-    >
+    <Tab.Panel className="bg-white rounded-xl p-3 focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60">
       <div className="w-full px-4 pt-12">
         <div className="w-full max-w-md mx-auto">
           <RadioGroup value={selected} onChange={setSelected}>
@@ -85,13 +88,13 @@ export default function VMPanel() {
         </div>
       </div>
       <button
-        onClick={() => setShowResults(!showResults)}
+        onClick={() => computeResults()}
         className="bg-blue-900 text-sm leading-5 mt-8 font-medium text-white p-2 m-2 mb-5 rounded-lg block mx-auto"
         type="button"
       >
         Calculate Prices
       </button>
-      {showResults && <VMResultsTable results={placeholderResults} />}
+      {results && <VMResultsTable results={results} />}
     </Tab.Panel>
   );
 }
