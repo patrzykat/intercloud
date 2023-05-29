@@ -1,5 +1,3 @@
-# www.interclouds.tech
-
 # Description
 Intercloud is a web application that compares cloud services between major providers given certain specifications. Compares virtual machine, object storage, cloud function prices between AWS, Google Cloud, Azure, DigitalOcean, and Linode. Serverless functions update prices using the cloud billing APIs.
 
